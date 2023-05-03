@@ -1,0 +1,53 @@
+  // Looping Harlem Shake in delphi by Taylor Newsome ClumsyLulz on twitter
+unit Unit1;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
+  System.Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs,
+  Vcl.StdCtrls, Vcl.OleCtrls, SHDocVw;
+
+type
+  TForm1 = class(TForm)
+    WebBrowser1: TWebBrowser;
+    Button1: TButton;
+    procedure FormCreate(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
+    procedure WebBrowser1DocumentComplete(ASender: TObject;
+      const pDisp: IDispatch; const URL: OleVariant);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form1: TForm1;
+
+implementation
+
+{$R *.dfm}
+
+procedure TForm1.FormCreate(Sender: TObject);
+begin
+  // Set the URL of the embedded video player
+  WebBrowser1.Navigate('https://www.youtube.com/embed/qV0LHCHf-pE?autoplay=1&loop=1');
+end;
+
+procedure TForm1.Button1Click(Sender: TObject);
+begin
+  // Stop the video player by setting its URL to about:blank
+  WebBrowser1.Navigate('about:blank');
+end;
+
+procedure TForm1.WebBrowser1DocumentComplete(ASender: TObject;
+  const pDisp: IDispatch; const URL: OleVariant);
+begin
+  // Set the embedded video player to loop
+  if Pos('youtube.com', URL) > 0 then
+    WebBrowser1.OleObject.Document.InvokeScript('eval',
+      [ 'document.getElementsByTagName("video")[0].setAttribute("loop", "true");' ]);
+end;
+
+end.
