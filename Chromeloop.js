@@ -1,4 +1,3 @@
-```js
 // Looping Harlem Shake in Chrome by Taylor Newsome ClumsyLulz on twitter //
 
 // Create a new tab and play the video
@@ -51,4 +50,3 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
     loopVideo(tabId);
   }
 });
-```
